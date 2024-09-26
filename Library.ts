@@ -6,6 +6,13 @@ type Book = {
   isBorrowed: boolean;
 };
 
+export class BookNotFoundError extends Error {
+  constructor(isbn: number) {
+    super(`Book [ISBN ${isbn}] not found.`);
+    this.name = "BookNotFoundError";
+  }
+}
+
 export default class Library {
   private books: Book[] = [];
   addBook = (isbn: number, title: string, author: string, publicationYear: number): void => {
