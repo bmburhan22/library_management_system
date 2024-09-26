@@ -1,4 +1,4 @@
-import Library, {BookNotFoundError} from '../Library';
+import Library, {BookAlreadyBorrowedError, BookNotFoundError} from '../Library';
 
 describe('Library Management System', () => {
   let library: Library;
@@ -30,6 +30,12 @@ describe('Library Management System', () => {
 
   test('Throw error when borrowing a book that does not exist', () => {
     expect(() => library.borrowBook(777)).toThrowError(new BookNotFoundError(777));
+  });
+
+  test('Throw error when borrowing a book that is already borrowed', () => {
+    library.addBook(5343, 'Python 101', 'Jane White', 2018);
+    library.borrowBook(5343);
+    expect(() => library.borrowBook(5343)).toThrowError(new BookAlreadyBorrowedError(5343));
   });
 
 });
