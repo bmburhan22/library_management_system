@@ -31,6 +31,10 @@ export default class Library {
     if (book.isBorrowed) throw new BookAlreadyBorrowedError(isbn);
     book.isBorrowed = true;
   }
-  returnBook = (isbn: number): void => { }
+  returnBook = (isbn: number): void => {
+    const book = this.books.find(book => book.isbn == isbn);
+    if (book == null) throw new BookNotFoundError(isbn);
+    book.isBorrowed = false;
+  }
   viewAvailableBooks = (): Book[] => this.books.filter(book => !book.isBorrowed);
 }
